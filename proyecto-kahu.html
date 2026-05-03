@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAHU | Ángel Apolinar</title>
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { 
+            --navy: #0A1428; 
+            --mint: #00FFB2; 
+            --white: #FFFFFF;
+            --gray: #8892B0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: var(--navy); 
+            color: var(--white); 
+            font-family: 'Atkinson Hyperlegible', sans-serif; 
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* NAVEGACIÓN */
+        nav { padding: 40px 5%; }
+        .back-link {
+            font-family: 'Archivo Black', sans-serif;
+            color: var(--gray);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover { color: var(--mint); }
+
+        /* HEADER DEL PROYECTO */
+        .project-header { padding: 20px 5% 60px 5%; }
+        h1 { 
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem); 
+            line-height: 1; 
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .project-meta {
+            color: var(--mint);
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* IMAGEN DE PORTADA (FULL BLEED / HERO) */
+        .cover-wrapper { padding: 0 5%; margin-bottom: 100px; }
+        .cover-img {
+            width: 100%;
+            height: 70vh;
+            object-fit: cover;
+            border-radius: 4px; /* Borde edgy sutil */
+        }
+
+        /* BLOQUES INTERCALADOS (EDITORIAL UX) */
+        .case-container { padding: 0 10%; max-width: 1400px; margin: 0 auto; }
+        
+        .content-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 100px;
+        }
+
+        /* Invierte el orden en pantallas grandes para el zigzag */
+        .content-block.reverse .text-side { order: 2; }
+        .content-block.reverse .img-side { order: 1; }
+
+        .text-side h2 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .text-side p { font-size: 1.1rem; color: var(--gray); margin-bottom: 20px; }
+
+        .img-side img {
+            width: 100%;
+            border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* GALERÍA FINAL TIPO MOSAICO */
+        .final-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 100px;
+        }
+        .final-gallery img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; aspect-ratio: 16/9; }
+        .final-gallery img:nth-child(3) { grid-column: span 2; aspect-ratio: 21/9; } /* Imagen panorámica al final */
+
+        /* FOOTER / NEXT PROJECT */
+        .next-project {
+            padding: 80px 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            background: #081020;
+        }
+        .next-label { color: var(--gray); font-size: 1rem; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; display: block; }
+        .next-link {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: var(--white);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .next-link:hover { color: var(--mint); }
+
+        /* RESPONSIVE: En móviles, todo se vuelve una sola columna */
+        @media (max-width: 768px) {
+            .content-block { grid-template-columns: 1fr; gap: 30px; }
+            .content-block.reverse .text-side, .content-block.reverse .img-side { order: unset; }
+            .case-container { padding: 0 5%; }
+            .final-gallery { grid-template-columns: 1fr; }
+            .final-gallery img:nth-child(3) { grid-column: span 1; aspect-ratio: 16/9; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="back-link">← Volver al inicio</a>
+</nav>
+
+<header class="project-header">
+    <h1>Kahu</h1>
+    <div class="project-meta">Creación de Marca / Estrategia / Identidad Visual</div>
+</header>
+
+<div class="cover-wrapper">
+    <img src="https://via.placeholder.com/1600x900/112240/00FFB2?text=KAHU+COVER" alt="Kahu Cover" class="cover-img">
+</div>
+
+<div class="case-container">
+    
+    <!-- BLOQUE 1: EL RETO -->
+    <div class="content-block">
+        <div class="text-side">
+            <h2>El Reto</h2>
+            <p>Aquí describes el punto de partida del proyecto. Cuál era el problema de la marca o la necesidad del cliente. Mantén el texto al punto, enfocado en el negocio y la estrategia.</p>
+        </div>
+        <div class="img-side">
+            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=IMAGEN+PROCESO" alt="Proceso Kahu">
+        </div>
+    </div>
+
+    <!-- BLOQUE 2: LA SOLUCIÓN (Clase 'reverse' invierte el orden para el zigzag) -->
+    <div class="content-block reverse">
+        <div class="text-side">
+            <h2>La Ejecución</h2>
+            <p>Explica tu proceso como Director de Arte. Cómo llegaste a la solución visual, la paleta de colores, la tipografía y el sistema de identidad desarrollado para Kahu.</p>
+        </div>
+        <div class="img-side">
+            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=IMAGEN+RESULTADO" alt="Resultado Kahu">
+        </div>
+    </div>
+
+    <!-- GALERÍA FINAL -->
+    <div class="final-gallery">
+        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=DETALLE+1" alt="Detalle 1">
+        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=DETALLE+2" alt="Detalle 2">
+        <img src="https://via.placeholder.com/1600x600/112240/00FFB2?text=APLICACION+FINAL" alt="Aplicación">
+    </div>
+
+</div>
+
+<!-- FOOTER DE NAVEGACIÓN AL SIGUIENTE PROYECTO -->
+<div class="next-project">
+    <span class="next-label">Siguiente Proyecto</span>
+    <a href="proyecto-seven.html" class="next-link">Seven Jeans →</a>
+</div>
+
+</body>
+</html>
