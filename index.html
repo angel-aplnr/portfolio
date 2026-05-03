@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Nombre | Art Director</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #f9f9f9; --text: #1a1a1a; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; line-height: 1.6; }
+        
+        /* Layout Editorial */
+        header { padding: 10vh 10%; display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 4rem; margin: 0; border-bottom: 2px solid var(--text); }
+        .bio { font-size: 1.2rem; align-self: end; }
+        .skills { list-style: none; padding: 0; font-weight: 400; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; }
+        
+        /* Galería Minimalista */
+        .projects { padding: 0 10%; }
+        .project-link { 
+            display: block; 
+            font-family: 'Playfair Display', serif; 
+            font-size: 3rem; 
+            text-decoration: none; 
+            color: var(--text);
+            padding: 40px 0;
+            border-bottom: 1px solid #ddd;
+            transition: 0.4s ease;
+        }
+        .project-link:hover { padding-left: 20px; opacity: 0.5; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div>
+        <h1>Tu Nombre.</h1>
+        <p class="bio">Director de Arte enfocado en crear sistemas visuales que cuentan historias. Minimalismo con alma editorial.</p>
+    </div>
+    <div>
+        <ul class="skills">
+            <li>• Visual Storytelling</li>
+            <li>• Identity Systems</li>
+            <li>• Motion Direction</li>
+            <li>• UX Strategy</li>
+        </ul>
+    </div>
+</header>
+
+<section class="projects">
+    <a href="proyecto-1.html" class="project-link">Proyecto Titular 01</a>
+    <a href="#" class="project-link">Campaña Global 02</a>
+    <a href="#" class="project-link">Editorial Branding 03</a>
+</section>
+
+</body>
+</html>
