@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ÁNGEL APOLINAR | Art Director</title>
-    <!-- Tipografía: Atkinson Hyperlegible -->
+    <!-- Tipografías: Archivo Black para impacto, Atkinson Hyperlegible para UI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* PALETA DE COLORES Y VARIABLES */
         :root { 
-            --navy: #0A1428;      /* Azul Marino profundo */
-            --navy-light: #112240; /* Azul Marino para tarjetas */
-            --mint: #00FFB2;      /* Menta brillante/Neón */
-            --white: #CCD6F6;     /* Blanco/Grisáceo elegante */
-            --pure-white: #FFFFFF;
+            --navy: #0A1428; 
+            --navy-overlay: rgba(10, 20, 40, 0.9);
+            --mint: #00FFB2; 
+            --white: #FFFFFF;
+            --gray: #8892B0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,223 +24,306 @@
             background-color: var(--navy); 
             color: var(--white); 
             font-family: 'Atkinson Hyperlegible', sans-serif; 
-            line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* HERO SECTION */
-        header { 
-            min-height: 80vh; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            padding: 0 10%; 
-        }
-        .hero-greeting { color: var(--mint); font-size: 1.2rem; font-weight: 700; letter-spacing: 2px; margin-bottom: 20px; }
-        h1 { font-size: clamp(3rem, 8vw, 6rem); color: var(--pure-white); line-height: 1.1; font-weight: 700; margin-bottom: 20px; }
-        h1 span { color: var(--mint); }
-        .hero-bio { font-size: 1.2rem; max-width: 600px; margin-bottom: 40px; }
-        
-        /* ANIMACIÓN DE SCROLL */
-        .scroll-indicator { color: var(--mint); font-weight: 700; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 2px; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
-
-        /* SECCIONES DE PROYECTOS */
-        section { padding: 80px 10%; }
-        .section-title { 
-            font-size: 2.5rem; 
-            color: var(--pure-white); 
-            margin-bottom: 40px; 
-            display: flex; 
-            align-items: center; 
-        }
-        .section-title::after { 
-            content: ""; 
-            display: block; 
-            width: 300px; 
-            height: 1px; 
-            background: var(--navy-light); 
-            margin-left: 20px; 
-        }
-
-        /* GRID DE TARJETAS (MUY VISUAL) */
-        .project-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
-            gap: 40px; 
-        }
-
-        .project-card { 
-            background: var(--navy-light); 
-            border-radius: 8px; 
-            overflow: hidden; 
-            text-decoration: none; 
-            color: var(--white);
-            border: 1px solid transparent;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animación suave y elástica */
+        /* HERO SECTION CON IMAGEN DE FONDO */
+        .hero {
             position: relative;
+            min-height: 80vh;
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            padding: 0 5%;
+            /* AQUÍ VA TU IMAGEN DE FONDO AZUL MARINO */
+            background-image: url('https://via.placeholder.com/1920x1080/0A1428/0A1428'); 
+            background-size: cover;
+            background-position: center;
         }
 
-        /* Placeholder para las imágenes de tus proyectos */
-        .card-image { 
-            width: 100%; 
-            height: 250px; 
-            background: linear-gradient(45deg, #0A1428, #112240); /* Reemplazarás esto con <img src="..."> */
-            border-bottom: 1px solid rgba(0, 255, 178, 0.1);
+        /* Capa oscura sobre la imagen para que el texto sea legible */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(10,20,40,0.3), var(--navy));
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 { 
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(3rem, 10vw, 8rem); 
+            line-height: 0.9; 
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+
+        .bio { 
+            font-size: 1.2rem; 
+            color: var(--gray);
+            max-width: 500px; 
+            line-height: 1.5;
+        }
+
+        /* MENÚ TIPOGRÁFICO GIGANTE */
+        .menu-container {
+            padding: 50px 5% 0 5%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .category-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .category-menu li {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            text-transform: uppercase;
+            color: var(--gray);
+            opacity: 0.4;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        .category-menu li:hover {
+            opacity: 0.8;
+            color: var(--white);
+            padding-left: 20px;
+        }
+
+        .category-menu li.active {
+            opacity: 1;
+            color: var(--mint);
+        }
+
+        /* GALERÍAS (OCULTAS POR DEFECTO) */
+        .gallery-section {
+            display: none; /* Se activa con JS */
+            padding: 40px 5% 100px 5%;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .gallery-section.active {
+            display: grid;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* TARJETAS DE PROYECTO: IMAGEN + OVERLAY */
+        .project-card {
+            position: relative;
+            border-radius: 4px; /* Borde sutil y edgy */
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: #112240;
+            display: block;
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             transition: transform 0.5s ease;
         }
 
-        .card-content { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .card-title { font-size: 1.5rem; color: var(--pure-white); margin-bottom: 10px; font-weight: 700; }
-        .card-desc { font-size: 1rem; margin-bottom: 20px; }
-        .card-tags { font-size: 0.8rem; color: var(--mint); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
-
-        /* HOVER EFFECTS: La magia visual */
-        .project-card:hover { 
-            transform: translateY(-10px); 
-            border-color: var(--mint); 
-            box-shadow: 0 10px 30px rgba(0, 255, 178, 0.15); 
+        /* El Overlay que aparece en Hover */
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--navy-overlay);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 20px;
         }
-        .project-card:hover .card-image { transform: scale(1.05); }
 
-        /* FOOTER */
-        footer { text-align: center; padding: 100px 10%; background: var(--navy-light); }
-        .cta-btn { 
-            display: inline-block; padding: 18px 40px; border: 2px solid var(--mint); 
-            color: var(--mint); text-decoration: none; font-size: 1.2rem; font-weight: 700; 
-            border-radius: 4px; transition: 0.3s; margin-bottom: 30px;
+        .project-card:hover img {
+            transform: scale(1.03);
         }
-        .cta-btn:hover { background: var(--mint); color: var(--navy); }
 
+        .project-card:hover .overlay {
+            opacity: 1;
+        }
+
+        .project-title {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2rem;
+            color: var(--white);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            transform: translateY(15px);
+            transition: transform 0.3s ease;
+        }
+
+        .project-tags {
+            font-size: 1rem;
+            color: var(--mint);
+            font-weight: 700;
+            transform: translateY(15px);
+            transition: transform 0.3s ease;
+            transition-delay: 0.05s;
+        }
+
+        .project-card:hover .project-title,
+        .project-card:hover .project-tags {
+            transform: translateY(0);
+        }
+
+        /* FOOTER MINIMALISTA */
+        footer {
+            padding: 80px 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .mail-link {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .mail-link:hover {
+            color: var(--mint);
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="hero-greeting">HOLA, MI NOMBRE ES</div>
-    <h1>Ángel <span>Apolinar.</span><br>Construyo marcas.</h1>
-    <p class="hero-bio">Director creativo y estratega con más de 10 años de experiencia[cite: 1]. Articulando visión creativa con objetivos de negocio a través de branding, diseño digital y estrategias multicanal[cite: 1].</p>
-    <div class="scroll-indicator">↓ Explora mi trabajo</div>
-</header>
-
-<!-- SECCIÓN 1: BRANDING -->
-<section>
-    <h2 class="section-title">01. Branding & Identidad</h2>
-    <div class="project-grid">
-        
-        <a href="#" class="project-card">
-            <div class="card-image"></div> <!-- Aquí irá tu imagen de Kahu -->
-            <div class="card-content">
-                <div>
-                    <h3 class="card-title">Kahu</h3>
-                    <p class="card-desc">Creación de marca desde cero. Naming, identidad visual y posicionamiento estratégico.</p>
-                </div>
-                <div class="card-tags">Brand Identity</div>
-            </div>
-        </a>
-
-        <a href="#" class="project-card">
-            <div class="card-image"></div>
-            <div class="card-content">
-                <div>
-                    <h3 class="card-title">Seven Jeans & Seven Move</h3>
-                    <p class="card-desc">Refresh integral de marca y posicionamiento estratégico para submarcas[cite: 1].</p>
-                </div>
-                <div class="card-tags">Brand Refresh</div>
-            </div>
-        </a>
-
-        <a href="#" class="project-card">
-            <div class="card-image"></div>
-            <div class="card-content">
-                <div>
-                    <h3 class="card-title">MÍO - SMNYL</h3>
-                    <p class="card-desc">Desarrollo de marca y estudio de mercado para lanzamiento de producto financiero[cite: 1].</p>
-                </div>
-                <div class="card-tags">Naming & Branding</div>
-            </div>
-        </a>
-
-        <a href="#" class="project-card">
-            <div class="card-image"></div>
-            <div class="card-content">
-                <div>
-                    <h3 class="card-title">Dorco</h3>
-                    <p class="card-desc">Diseño de packaging y dirección de arte para consumo masivo.</p>
-                </div>
-                <div class="card-tags">Packaging Design</div>
-            </div>
-        </a>
+<section class="hero">
+    <div class="hero-content">
+        <h1>Apolinar.</h1>
+        <p class="bio">Director creativo y estratega. Articulando visión creativa con objetivos de negocio a través de diseño radical y minimalista.</p>
     </div>
 </section>
 
-<!-- SECCIÓN 2: DISEÑO DIGITAL -->
-<section>
-    <h2 class="section-title">02. Diseño Digital</h2>
-    <div class="project-grid">
-        
-        <a href="#" class="project-card">
-            <div class="card-image"></div>
-            <div class="card-content">
-                <div>
-                    <h3 class="card-title">Pringles x Call of Duty</h3>
-                    <p class="card-desc">Estrategia creativa y diseño de sitio web promocional para campaña multicanal[cite: 1].</p>
-                </div>
-                <div class="card-tags">UI/UX • Web Promo</div>
-            </div>
-        </a>
+<!-- EL MENÚ TIPOGRÁFICO INTERACTIVO -->
+<div class="menu-container">
+    <ul class="category-menu">
+        <li class="tab-btn active" data-target="gallery-branding">01. Branding</li>
+        <li class="tab-btn" data-target="gallery-digital">02. Diseño Digital</li>
+        <li class="tab-btn" data-target="gallery-social">03. Social Media</li>
+    </ul>
+</div>
 
-        <a href="#" class="project-card">
-            <div class="card-image"></div>
-            <div class="card-content">
-                <div>
-                    <h3 class="card-title">Landing Pages & E-commerce</h3>
-                    <p class="card-desc">Diseño enfocado en conversión y optimización de experiencia de usuario en ecosistemas digitales.</p>
-                </div>
-                <div class="card-tags">UI Design • Conversion</div>
-            </div>
-        </a>
+<!-- GALERÍA 1: BRANDING (Visible por defecto) -->
+<div class="gallery-section active" id="gallery-branding">
+    <a href="proyecto-kahu.html" class="project-card">
+        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=KAHU" alt="Kahu">
+        <div class="overlay">
+            <h2 class="project-title">Kahu</h2>
+            <p class="project-tags">Creación de Marca</p>
+        </div>
+    </a>
+    
+    <a href="proyecto-seven.html" class="project-card">
+        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=SEVEN+JEANS" alt="Seven Jeans">
+        <div class="overlay">
+            <h2 class="project-title">Seven Jeans</h2>
+            <p class="project-tags">Brand Refresh</p>
+        </div>
+    </a>
 
-    </div>
-</section>
+    <a href="proyecto-mio.html" class="project-card">
+        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=MIO" alt="MIO">
+        <div class="overlay">
+            <h2 class="project-title">MÍO (SMNYL)</h2>
+            <p class="project-tags">Naming & Identidad</p>
+        </div>
+    </a>
 
-<!-- SECCIÓN 3: SOCIAL MEDIA -->
-<section>
-    <h2 class="section-title">03. Social Media & Content</h2>
-    <div class="project-grid">
-        
-        <a href="#" class="project-card">
-            <div class="card-image"></div>
-            <div class="card-content">
-                <div>
-                    <h3 class="card-title">PlanB</h3>
-                    <p class="card-desc">Desarrollo de identidad visual adaptada a formatos digitales y estrategia completa de contenidos.</p>
-                </div>
-                <div class="card-tags">Content Strategy</div>
-            </div>
-        </a>
+    <a href="proyecto-dorco.html" class="project-card">
+        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=DORCO" alt="Dorco">
+        <div class="overlay">
+            <h2 class="project-title">Dorco</h2>
+            <p class="project-tags">Packaging</p>
+        </div>
+    </a>
+</div>
 
-        <a href="#" class="project-card">
-            <div class="card-image"></div>
-            <div class="card-content">
-                <div>
-                    <h3 class="card-title">Seven Jeans Digital</h3>
-                    <p class="card-desc">Dirección del ciclo completo de producción de contenido: planeación editorial, grabación y distribución[cite: 1].</p>
-                </div>
-                <div class="card-tags">Art Direction • Video</div>
-            </div>
-        </a>
+<!-- GALERÍA 2: DISEÑO DIGITAL (Oculta por defecto) -->
+<div class="gallery-section" id="gallery-digital">
+    <a href="proyecto-pringles.html" class="project-card">
+        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=PRINGLES" alt="Pringles">
+        <div class="overlay">
+            <h2 class="project-title">Pringles x COD</h2>
+            <p class="project-tags">Web Promo</p>
+        </div>
+    </a>
 
-    </div>
-</section>
+    <a href="proyecto-landing.html" class="project-card">
+        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=LANDINGS" alt="Landings">
+        <div class="overlay">
+            <h2 class="project-title">E-commerce Landings</h2>
+            <p class="project-tags">UI/UX & Conversión</p>
+        </div>
+    </a>
+</div>
+
+<!-- GALERÍA 3: SOCIAL MEDIA (Oculta por defecto) -->
+<div class="gallery-section" id="gallery-social">
+    <a href="proyecto-planb.html" class="project-card">
+        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=PLAN+B" alt="PlanB">
+        <div class="overlay">
+            <h2 class="project-title">PlanB</h2>
+            <p class="project-tags">Identidad Digital</p>
+        </div>
+    </a>
+
+    <a href="proyecto-sevendigital.html" class="project-card">
+        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=SEVEN+DIGITAL" alt="Seven Digital">
+        <div class="overlay">
+            <h2 class="project-title">Seven Jeans</h2>
+            <p class="project-tags">Content Strategy</p>
+        </div>
+    </a>
+</div>
 
 <footer>
-    <h2 style="font-size: 2.5rem; margin-bottom: 30px; color: var(--pure-white);">¿Listo para impactar?</h2>
-    <a href="mailto:angel.aplnr@gmail.com" class="cta-btn">Hablemos de tu proyecto</a>
-    <p style="margin-top: 20px; color: var(--white); font-size: 0.9rem;">+52 55 2727 7631 | angel.aplnr@gmail.com</p>
+    <a href="mailto:angel.aplnr@gmail.com" class="mail-link">angel.aplnr@gmail.com</a>
 </footer>
+
+<!-- SCRIPT PARA EL MENÚ INTERACTIVO -->
+<script>
+    const tabs = document.querySelectorAll('.tab-btn');
+    const galleries = document.querySelectorAll('.gallery-section');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Quitar clase active de todos los botones y galerías
+            tabs.forEach(t => t.classList.remove('active'));
+            galleries.forEach(g => g.classList.remove('active'));
+
+            // Añadir clase active al botón clickeado
+            tab.classList.add('active');
+
+            // Mostrar la galería correspondiente
+            const targetId = tab.getAttribute('data-target');
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
+</script>
 
 </body>
 </html>
