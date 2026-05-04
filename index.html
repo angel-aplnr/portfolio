@@ -82,7 +82,7 @@
 
         /* SECCIÓN MENÚ Y GALERÍAS */
         .menu-wrapper {
-            height: 100vh; /* Al ser slider horizontal, bloqueamos a 100vh exacto */
+            height: 100vh; 
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -93,31 +93,31 @@
             padding: 0 5%;
             position: relative;
             z-index: 2;
-            margin-bottom: 30px;
+            margin-bottom: 4vh; /* Respiro dinámico antes de la galería */
         }
 
         .category-menu {
             list-style: none;
             display: flex;
-            flex-direction: row; /* Menú en horizontal para ahorrar espacio vertical */
-            flex-wrap: wrap;
-            gap: 30px;
+            flex-direction: column; /* DE VUELTA "EN SALTOS" (VERTICAL) */
+            gap: 5px; /* Muy pegados para ese look de cartelera */
         }
 
         .category-menu li {
             font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-size: clamp(3.5rem, 8vw, 7rem); /* GIGANTE OTRA VEZ */
             text-transform: uppercase;
             color: var(--gray);
-            opacity: 0.4;
+            opacity: 0.3;
             cursor: pointer;
             transition: all 0.3s ease;
-            line-height: 1;
+            line-height: 0.9; /* Interlineado cerrado para impacto */
         }
 
         .category-menu li:hover {
             opacity: 0.8;
             color: var(--white);
+            padding-left: 20px;
         }
 
         .category-menu li.active {
@@ -127,7 +127,7 @@
 
         /* CONTENEDOR DE GALERÍA (BOTONES + SLIDER) */
         .gallery-wrapper {
-            display: none; /* Oculto hasta el primer clic */
+            display: none; 
             position: relative;
             width: 100%;
             align-items: center;
@@ -148,11 +148,10 @@
             display: flex;
             gap: 20px;
             overflow-x: auto;
-            scroll-snap-type: x mandatory; /* Snap horizontal */
+            scroll-snap-type: x mandatory; 
             scroll-behavior: smooth;
             padding: 0 5%;
             width: 100%;
-            /* Ocultar barra de scroll nativa */
             -ms-overflow-style: none;  
             scrollbar-width: none; 
         }
@@ -163,14 +162,15 @@
 
         /* TARJETAS DE PROYECTO (VERTICALES TIPO PÓSTER) */
         .project-card {
-            flex: 0 0 clamp(260px, 25vw, 400px); /* Ancho fijo para que no se aplasten */
-            aspect-ratio: 9/16; /* Formato vertical (cámbialo a 9/32 si lo quieres extremo) */
+            /* Ancho ajustable para que la altura nunca rompa el 100vh */
+            flex: 0 0 clamp(200px, 22vw, 320px); 
+            aspect-ratio: 9/16; 
             position: relative;
             border-radius: 4px;
             overflow: hidden;
             background: #112240;
             display: block;
-            scroll-snap-align: start; /* Para que al deslizar se frene en cada tarjeta */
+            scroll-snap-align: start; 
         }
 
         .project-card img {
@@ -201,7 +201,7 @@
 
         .project-card:hover .overlay {
             opacity: 1;
-            border-color: rgba(0, 255, 178, 0.3); /* Borde sutil menta */
+            border-color: rgba(0, 255, 178, 0.3); 
         }
 
         .project-title {
@@ -255,7 +255,6 @@
         .scroll-btn.left { left: 1%; }
         .scroll-btn.right { right: 1%; }
 
-        /* Ocultar flechas en móvil para que usen su dedo */
         @media (max-width: 768px) {
             .scroll-btn { display: none; }
         }
@@ -305,7 +304,7 @@
 <!-- SECCIÓN MENÚ Y GALERÍAS (SLIDER HORIZONTAL) -->
 <section class="menu-wrapper snap-section">
     
-    <!-- EL MENÚ -->
+    <!-- EL MENÚ "EN SALTOS" GIGANTE -->
     <div class="menu-container">
         <ul class="category-menu">
             <li class="tab-btn" data-target="gallery-branding">Branding</li>
@@ -430,7 +429,7 @@
     });
 
     // 2. Lógica de las flechitas de Scroll Horizontal
-    const scrollAmount = 350; // Cuántos pixeles avanza por cada clic
+    const scrollAmount = 350;
 
     document.querySelectorAll('.scroll-btn.right').forEach(btn => {
         btn.addEventListener('click', (e) => {
