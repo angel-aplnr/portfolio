@@ -12,7 +12,7 @@
     <style>
         :root { 
             --navy: #0A1428; 
-            --navy-overlay: rgba(10, 20, 40, 0.9);
+            --navy-overlay: rgba(10, 20, 40, 0.85);
             --mint: #00FFB2; 
             --white: #FFFFFF;
             --gray: #8892B0;
@@ -20,7 +20,7 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* SCROLL SNAP MAGNÉTICO */
+        /* SCROLL SNAP MAGNÉTICO VERTICAL */
         html {
             scroll-snap-type: y mandatory;
             scroll-behavior: smooth;
@@ -33,7 +33,6 @@
             overflow-x: hidden;
         }
 
-        /* SECCIONES: Ajuste para el salto de scroll */
         .snap-section {
             scroll-snap-align: start;
             scroll-snap-stop: always;
@@ -42,7 +41,7 @@
         /* HERO SECTION */
         .hero {
             position: relative;
-            height: 100vh; /* Alto exacto de la pantalla */
+            height: 100vh; 
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -83,28 +82,31 @@
 
         /* SECCIÓN MENÚ Y GALERÍAS */
         .menu-wrapper {
-            min-height: 100vh; /* Alto mínimo de pantalla */
+            height: 100vh; /* Al ser slider horizontal, bloqueamos a 100vh exacto */
             display: flex;
             flex-direction: column;
-            padding-top: 15vh; /* Da respiro arriba */
+            justify-content: center;
+            position: relative;
         }
 
         .menu-container {
             padding: 0 5%;
             position: relative;
             z-index: 2;
+            margin-bottom: 30px;
         }
 
         .category-menu {
             list-style: none;
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            flex-direction: row; /* Menú en horizontal para ahorrar espacio vertical */
+            flex-wrap: wrap;
+            gap: 30px;
         }
 
         .category-menu li {
             font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-size: clamp(1.5rem, 4vw, 3rem);
             text-transform: uppercase;
             color: var(--gray);
             opacity: 0.4;
@@ -116,7 +118,6 @@
         .category-menu li:hover {
             opacity: 0.8;
             color: var(--white);
-            padding-left: 20px;
         }
 
         .category-menu li.active {
@@ -124,17 +125,17 @@
             color: var(--mint);
         }
 
-        /* GALERÍAS (OCULTAS POR DEFECTO) */
-        .gallery-section {
-            display: none; 
-            padding: 60px 5% 100px 5%;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 20px;
+        /* CONTENEDOR DE GALERÍA (BOTONES + SLIDER) */
+        .gallery-wrapper {
+            display: none; /* Oculto hasta el primer clic */
+            position: relative;
+            width: 100%;
+            align-items: center;
             animation: fadeIn 0.5s ease forwards;
         }
 
-        .gallery-section.active {
-            display: grid;
+        .gallery-wrapper.active {
+            display: flex;
         }
 
         @keyframes fadeIn {
@@ -142,14 +143,34 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* TARJETAS DE PROYECTO */
+        /* SLIDER HORIZONTAL */
+        .gallery-slider {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory; /* Snap horizontal */
+            scroll-behavior: smooth;
+            padding: 0 5%;
+            width: 100%;
+            /* Ocultar barra de scroll nativa */
+            -ms-overflow-style: none;  
+            scrollbar-width: none; 
+        }
+        
+        .gallery-slider::-webkit-scrollbar { 
+            display: none; 
+        }
+
+        /* TARJETAS DE PROYECTO (VERTICALES TIPO PÓSTER) */
         .project-card {
+            flex: 0 0 clamp(260px, 25vw, 400px); /* Ancho fijo para que no se aplasten */
+            aspect-ratio: 9/16; /* Formato vertical (cámbialo a 9/32 si lo quieres extremo) */
             position: relative;
             border-radius: 4px;
             overflow: hidden;
-            aspect-ratio: 4/3;
             background: #112240;
             display: block;
+            scroll-snap-align: start; /* Para que al deslizar se frene en cada tarjeta */
         }
 
         .project-card img {
@@ -171,6 +192,7 @@
             opacity: 0;
             transition: opacity 0.3s ease;
             padding: 20px;
+            border: 1px solid transparent;
         }
 
         .project-card:hover img {
@@ -179,6 +201,7 @@
 
         .project-card:hover .overlay {
             opacity: 1;
+            border-color: rgba(0, 255, 178, 0.3); /* Borde sutil menta */
         }
 
         .project-title {
@@ -205,9 +228,41 @@
             transform: translateY(0);
         }
 
+        /* BOTONES (FLECHITAS) DEL SLIDER */
+        .scroll-btn {
+            position: absolute;
+            z-index: 10;
+            background: var(--navy);
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-btn:hover {
+            border-color: var(--mint);
+            color: var(--mint);
+            background: rgba(0, 255, 178, 0.1);
+        }
+
+        .scroll-btn.left { left: 1%; }
+        .scroll-btn.right { right: 1%; }
+
+        /* Ocultar flechas en móvil para que usen su dedo */
+        @media (max-width: 768px) {
+            .scroll-btn { display: none; }
+        }
+
         /* FOOTER */
         footer {
-            height: 100vh; /* Footer también a pantalla completa para el snap */
+            height: 100vh; 
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -219,7 +274,7 @@
 
         .mail-link {
             font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(1.2rem, 3vw, 2.5rem); /* Reducido para mayor elegancia */
+            font-size: clamp(1.2rem, 3vw, 2.5rem); 
             color: var(--white);
             text-decoration: none;
             transition: color 0.3s;
@@ -247,13 +302,12 @@
     </div>
 </section>
 
-<!-- SECCIÓN MENÚ Y GALERÍAS -->
+<!-- SECCIÓN MENÚ Y GALERÍAS (SLIDER HORIZONTAL) -->
 <section class="menu-wrapper snap-section">
     
-    <!-- EL MENÚ TIPOGRÁFICO -->
+    <!-- EL MENÚ -->
     <div class="menu-container">
         <ul class="category-menu">
-            <!-- Sin clase active para que inicie cerrado -->
             <li class="tab-btn" data-target="gallery-branding">Branding</li>
             <li class="tab-btn" data-target="gallery-digital">Diseño Digital</li>
             <li class="tab-btn" data-target="gallery-social">Social Media</li>
@@ -261,76 +315,94 @@
     </div>
 
     <!-- GALERÍA 1: BRANDING -->
-    <div class="gallery-section" id="gallery-branding">
-        <a href="proyecto-kahu.html" class="project-card">
-            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=KAHU" alt="Kahu">
-            <div class="overlay">
-                <h2 class="project-title">Kahu</h2>
-                <p class="project-tags">Creación de Marca</p>
-            </div>
-        </a>
+    <div class="gallery-wrapper" id="gallery-branding">
+        <button class="scroll-btn left">←</button>
         
-        <a href="proyecto-seven.html" class="project-card">
-            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=SEVEN+JEANS" alt="Seven Jeans">
-            <div class="overlay">
-                <h2 class="project-title">Seven Jeans</h2>
-                <p class="project-tags">Brand Refresh</p>
-            </div>
-        </a>
+        <div class="gallery-slider">
+            <a href="proyecto-kahu.html" class="project-card">
+                <img src="https://via.placeholder.com/600x1067/112240/00FFB2?text=KAHU" alt="Kahu">
+                <div class="overlay">
+                    <h2 class="project-title">Kahu</h2>
+                    <p class="project-tags">Creación de Marca</p>
+                </div>
+            </a>
+            
+            <a href="proyecto-seven.html" class="project-card">
+                <img src="https://via.placeholder.com/600x1067/112240/00FFB2?text=SEVEN+JEANS" alt="Seven Jeans">
+                <div class="overlay">
+                    <h2 class="project-title">Seven Jeans</h2>
+                    <p class="project-tags">Brand Refresh</p>
+                </div>
+            </a>
 
-        <a href="proyecto-mio.html" class="project-card">
-            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=MIO" alt="MIO">
-            <div class="overlay">
-                <h2 class="project-title">MÍO (SMNYL)</h2>
-                <p class="project-tags">Naming & Identidad</p>
-            </div>
-        </a>
+            <a href="proyecto-mio.html" class="project-card">
+                <img src="https://via.placeholder.com/600x1067/112240/00FFB2?text=MIO" alt="MIO">
+                <div class="overlay">
+                    <h2 class="project-title">MÍO (SMNYL)</h2>
+                    <p class="project-tags">Naming & Identidad</p>
+                </div>
+            </a>
 
-        <a href="proyecto-dorco.html" class="project-card">
-            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=DORCO" alt="Dorco">
-            <div class="overlay">
-                <h2 class="project-title">Dorco</h2>
-                <p class="project-tags">Packaging</p>
-            </div>
-        </a>
+            <a href="proyecto-dorco.html" class="project-card">
+                <img src="https://via.placeholder.com/600x1067/112240/00FFB2?text=DORCO" alt="Dorco">
+                <div class="overlay">
+                    <h2 class="project-title">Dorco</h2>
+                    <p class="project-tags">Packaging</p>
+                </div>
+            </a>
+        </div>
+
+        <button class="scroll-btn right">→</button>
     </div>
 
     <!-- GALERÍA 2: DISEÑO DIGITAL -->
-    <div class="gallery-section" id="gallery-digital">
-        <a href="proyecto-pringles.html" class="project-card">
-            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=PRINGLES" alt="Pringles">
-            <div class="overlay">
-                <h2 class="project-title">Pringles x COD</h2>
-                <p class="project-tags">Web Promo</p>
-            </div>
-        </a>
+    <div class="gallery-wrapper" id="gallery-digital">
+        <button class="scroll-btn left">←</button>
+        
+        <div class="gallery-slider">
+            <a href="proyecto-pringles.html" class="project-card">
+                <img src="https://via.placeholder.com/600x1067/112240/00FFB2?text=PRINGLES" alt="Pringles">
+                <div class="overlay">
+                    <h2 class="project-title">Pringles x COD</h2>
+                    <p class="project-tags">Web Promo</p>
+                </div>
+            </a>
 
-        <a href="proyecto-landing.html" class="project-card">
-            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=LANDINGS" alt="Landings">
-            <div class="overlay">
-                <h2 class="project-title">E-commerce Landings</h2>
-                <p class="project-tags">UI/UX & Conversión</p>
-            </div>
-        </a>
+            <a href="proyecto-landing.html" class="project-card">
+                <img src="https://via.placeholder.com/600x1067/112240/00FFB2?text=LANDINGS" alt="Landings">
+                <div class="overlay">
+                    <h2 class="project-title">E-commerce Landings</h2>
+                    <p class="project-tags">UI/UX & Conversión</p>
+                </div>
+            </a>
+        </div>
+
+        <button class="scroll-btn right">→</button>
     </div>
 
     <!-- GALERÍA 3: SOCIAL MEDIA -->
-    <div class="gallery-section" id="gallery-social">
-        <a href="proyecto-planb.html" class="project-card">
-            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=PLAN+B" alt="PlanB">
-            <div class="overlay">
-                <h2 class="project-title">PlanB</h2>
-                <p class="project-tags">Identidad Digital</p>
-            </div>
-        </a>
+    <div class="gallery-wrapper" id="gallery-social">
+        <button class="scroll-btn left">←</button>
+        
+        <div class="gallery-slider">
+            <a href="proyecto-planb.html" class="project-card">
+                <img src="https://via.placeholder.com/600x1067/112240/00FFB2?text=PLAN+B" alt="PlanB">
+                <div class="overlay">
+                    <h2 class="project-title">PlanB</h2>
+                    <p class="project-tags">Identidad Digital</p>
+                </div>
+            </a>
 
-        <a href="proyecto-sevendigital.html" class="project-card">
-            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=SEVEN+DIGITAL" alt="Seven Digital">
-            <div class="overlay">
-                <h2 class="project-title">Seven Jeans</h2>
-                <p class="project-tags">Content Strategy</p>
-            </div>
-        </a>
+            <a href="proyecto-sevendigital.html" class="project-card">
+                <img src="https://via.placeholder.com/600x1067/112240/00FFB2?text=SEVEN+DIGITAL" alt="Seven Digital">
+                <div class="overlay">
+                    <h2 class="project-title">Seven Jeans</h2>
+                    <p class="project-tags">Content Strategy</p>
+                </div>
+            </a>
+        </div>
+
+        <button class="scroll-btn right">→</button>
     </div>
 
 </section>
@@ -340,27 +412,37 @@
     <a href="mailto:angel.aplnr@gmail.com" class="mail-link">angel.aplnr@gmail.com</a>
 </footer>
 
-<!-- SCRIPT PARA EL MENÚ INTERACTIVO -->
+<!-- SCRIPT PARA EL MENÚ INTERACTIVO Y EL SCROLL HORIZONTAL -->
 <script>
+    // 1. Lógica de las pestañas (Tabs)
     const tabs = document.querySelectorAll('.tab-btn');
-    const galleries = document.querySelectorAll('.gallery-section');
+    const galleries = document.querySelectorAll('.gallery-wrapper');
 
     tabs.forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            // Quitar clase active de todos los botones y galerías
+        tab.addEventListener('click', () => {
             tabs.forEach(t => t.classList.remove('active'));
             galleries.forEach(g => g.classList.remove('active'));
 
-            // Añadir clase active al botón clickeado
             tab.classList.add('active');
-
-            // Mostrar la galería correspondiente
             const targetId = tab.getAttribute('data-target');
-            const targetGallery = document.getElementById(targetId);
-            targetGallery.classList.add('active');
-            
-            // Opcional: Pequeño scroll suave hacia la galería si la pantalla es muy pequeña
-            // targetGallery.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
+
+    // 2. Lógica de las flechitas de Scroll Horizontal
+    const scrollAmount = 350; // Cuántos pixeles avanza por cada clic
+
+    document.querySelectorAll('.scroll-btn.right').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const slider = e.target.parentElement.querySelector('.gallery-slider');
+            slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+    });
+
+    document.querySelectorAll('.scroll-btn.left').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const slider = e.target.parentElement.querySelector('.gallery-slider');
+            slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
         });
     });
 </script>
