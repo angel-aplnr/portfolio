@@ -20,6 +20,12 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
+        /* SCROLL SNAP MAGNÉTICO */
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
         body { 
             background-color: var(--navy); 
             color: var(--white); 
@@ -27,21 +33,25 @@
             overflow-x: hidden;
         }
 
-        /* HERO SECTION CON IMAGEN DE FONDO */
+        /* SECCIONES: Ajuste para el salto de scroll */
+        .snap-section {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        /* HERO SECTION */
         .hero {
             position: relative;
-            min-height: 80vh;
+            height: 100vh; /* Alto exacto de la pantalla */
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: 0 5%;
-            /* AQUÍ VA TU IMAGEN DE FONDO AZUL MARINO */
             background-image: url('https://raw.githubusercontent.com/angel-aplnr/portfolio/refs/heads/main/hero_banner.webp'); 
             background-size: cover;
             background-position: center;
         }
 
-        /* Capa oscura sobre la imagen para que el texto sea legible */
         .hero::before {
             content: '';
             position: absolute;
@@ -71,9 +81,16 @@
             line-height: 1.5;
         }
 
-        /* MENÚ TIPOGRÁFICO GIGANTE */
+        /* SECCIÓN MENÚ Y GALERÍAS */
+        .menu-wrapper {
+            min-height: 100vh; /* Alto mínimo de pantalla */
+            display: flex;
+            flex-direction: column;
+            padding-top: 15vh; /* Da respiro arriba */
+        }
+
         .menu-container {
-            padding: 50px 5% 0 5%;
+            padding: 0 5%;
             position: relative;
             z-index: 2;
         }
@@ -109,8 +126,8 @@
 
         /* GALERÍAS (OCULTAS POR DEFECTO) */
         .gallery-section {
-            display: none; /* Se activa con JS */
-            padding: 40px 5% 100px 5%;
+            display: none; 
+            padding: 60px 5% 100px 5%;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 20px;
             animation: fadeIn 0.5s ease forwards;
@@ -121,14 +138,14 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* TARJETAS DE PROYECTO: IMAGEN + OVERLAY */
+        /* TARJETAS DE PROYECTO */
         .project-card {
             position: relative;
-            border-radius: 4px; /* Borde sutil y edgy */
+            border-radius: 4px;
             overflow: hidden;
             aspect-ratio: 4/3;
             background: #112240;
@@ -142,7 +159,6 @@
             transition: transform 0.5s ease;
         }
 
-        /* El Overlay que aparece en Hover */
         .overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -189,16 +205,21 @@
             transform: translateY(0);
         }
 
-        /* FOOTER MINIMALISTA */
+        /* FOOTER */
         footer {
-            padding: 80px 5%;
+            height: 100vh; /* Footer también a pantalla completa para el snap */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 5%;
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            background: #081020;
         }
 
         .mail-link {
             font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(2rem, 4vw, 3rem);
+            font-size: clamp(1.2rem, 3vw, 2.5rem); /* Reducido para mayor elegancia */
             color: var(--white);
             text-decoration: none;
             transition: color 0.3s;
@@ -207,100 +228,115 @@
         .mail-link:hover {
             color: var(--mint);
         }
+        
+        .footer-tag {
+            color: var(--gray);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 
-<section class="hero">
+<section class="hero snap-section">
     <div class="hero-content">
         <h1>Ángel Apolinar</h1>
         <p class="bio">Director creativo y estratega. Articulando visión creativa con objetivos de negocio a través del diseño.</p>
     </div>
 </section>
 
-<!-- EL MENÚ TIPOGRÁFICO INTERACTIVO -->
-<div class="menu-container">
-    <ul class="category-menu">
-        <li class="tab-btn active" data-target="gallery-branding">Branding</li>
-        <li class="tab-btn" data-target="gallery-digital">Diseño Digital</li>
-        <li class="tab-btn" data-target="gallery-social">Social Media</li>
-    </ul>
-</div>
-
-<!-- GALERÍA 1: BRANDING (Visible por defecto) -->
-<div class="gallery-section active" id="gallery-branding">
-    <a href="proyecto-kahu.html" class="project-card">
-        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=KAHU" alt="Kahu">
-        <div class="overlay">
-            <h2 class="project-title">Kahu</h2>
-            <p class="project-tags">Creación de Marca</p>
-        </div>
-    </a>
+<!-- SECCIÓN MENÚ Y GALERÍAS -->
+<section class="menu-wrapper snap-section">
     
-    <a href="proyecto-seven.html" class="project-card">
-        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=SEVEN+JEANS" alt="Seven Jeans">
-        <div class="overlay">
-            <h2 class="project-title">Seven Jeans</h2>
-            <p class="project-tags">Brand Refresh</p>
-        </div>
-    </a>
+    <!-- EL MENÚ TIPOGRÁFICO -->
+    <div class="menu-container">
+        <ul class="category-menu">
+            <!-- Sin clase active para que inicie cerrado -->
+            <li class="tab-btn" data-target="gallery-branding">Branding</li>
+            <li class="tab-btn" data-target="gallery-digital">Diseño Digital</li>
+            <li class="tab-btn" data-target="gallery-social">Social Media</li>
+        </ul>
+    </div>
 
-    <a href="proyecto-mio.html" class="project-card">
-        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=MIO" alt="MIO">
-        <div class="overlay">
-            <h2 class="project-title">MÍO (SMNYL)</h2>
-            <p class="project-tags">Naming & Identidad</p>
-        </div>
-    </a>
+    <!-- GALERÍA 1: BRANDING -->
+    <div class="gallery-section" id="gallery-branding">
+        <a href="proyecto-kahu.html" class="project-card">
+            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=KAHU" alt="Kahu">
+            <div class="overlay">
+                <h2 class="project-title">Kahu</h2>
+                <p class="project-tags">Creación de Marca</p>
+            </div>
+        </a>
+        
+        <a href="proyecto-seven.html" class="project-card">
+            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=SEVEN+JEANS" alt="Seven Jeans">
+            <div class="overlay">
+                <h2 class="project-title">Seven Jeans</h2>
+                <p class="project-tags">Brand Refresh</p>
+            </div>
+        </a>
 
-    <a href="proyecto-dorco.html" class="project-card">
-        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=DORCO" alt="Dorco">
-        <div class="overlay">
-            <h2 class="project-title">Dorco</h2>
-            <p class="project-tags">Packaging</p>
-        </div>
-    </a>
-</div>
+        <a href="proyecto-mio.html" class="project-card">
+            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=MIO" alt="MIO">
+            <div class="overlay">
+                <h2 class="project-title">MÍO (SMNYL)</h2>
+                <p class="project-tags">Naming & Identidad</p>
+            </div>
+        </a>
 
-<!-- GALERÍA 2: DISEÑO DIGITAL (Oculta por defecto) -->
-<div class="gallery-section" id="gallery-digital">
-    <a href="proyecto-pringles.html" class="project-card">
-        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=PRINGLES" alt="Pringles">
-        <div class="overlay">
-            <h2 class="project-title">Pringles x COD</h2>
-            <p class="project-tags">Web Promo</p>
-        </div>
-    </a>
+        <a href="proyecto-dorco.html" class="project-card">
+            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=DORCO" alt="Dorco">
+            <div class="overlay">
+                <h2 class="project-title">Dorco</h2>
+                <p class="project-tags">Packaging</p>
+            </div>
+        </a>
+    </div>
 
-    <a href="proyecto-landing.html" class="project-card">
-        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=LANDINGS" alt="Landings">
-        <div class="overlay">
-            <h2 class="project-title">E-commerce Landings</h2>
-            <p class="project-tags">UI/UX & Conversión</p>
-        </div>
-    </a>
-</div>
+    <!-- GALERÍA 2: DISEÑO DIGITAL -->
+    <div class="gallery-section" id="gallery-digital">
+        <a href="proyecto-pringles.html" class="project-card">
+            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=PRINGLES" alt="Pringles">
+            <div class="overlay">
+                <h2 class="project-title">Pringles x COD</h2>
+                <p class="project-tags">Web Promo</p>
+            </div>
+        </a>
 
-<!-- GALERÍA 3: SOCIAL MEDIA (Oculta por defecto) -->
-<div class="gallery-section" id="gallery-social">
-    <a href="proyecto-planb.html" class="project-card">
-        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=PLAN+B" alt="PlanB">
-        <div class="overlay">
-            <h2 class="project-title">PlanB</h2>
-            <p class="project-tags">Identidad Digital</p>
-        </div>
-    </a>
+        <a href="proyecto-landing.html" class="project-card">
+            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=LANDINGS" alt="Landings">
+            <div class="overlay">
+                <h2 class="project-title">E-commerce Landings</h2>
+                <p class="project-tags">UI/UX & Conversión</p>
+            </div>
+        </a>
+    </div>
 
-    <a href="proyecto-sevendigital.html" class="project-card">
-        <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=SEVEN+DIGITAL" alt="Seven Digital">
-        <div class="overlay">
-            <h2 class="project-title">Seven Jeans</h2>
-            <p class="project-tags">Content Strategy</p>
-        </div>
-    </a>
-</div>
+    <!-- GALERÍA 3: SOCIAL MEDIA -->
+    <div class="gallery-section" id="gallery-social">
+        <a href="proyecto-planb.html" class="project-card">
+            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=PLAN+B" alt="PlanB">
+            <div class="overlay">
+                <h2 class="project-title">PlanB</h2>
+                <p class="project-tags">Identidad Digital</p>
+            </div>
+        </a>
 
-<footer>
+        <a href="proyecto-sevendigital.html" class="project-card">
+            <img src="https://via.placeholder.com/800x600/112240/00FFB2?text=SEVEN+DIGITAL" alt="Seven Digital">
+            <div class="overlay">
+                <h2 class="project-title">Seven Jeans</h2>
+                <p class="project-tags">Content Strategy</p>
+            </div>
+        </a>
+    </div>
+
+</section>
+
+<footer class="snap-section">
+    <div class="footer-tag">¿Listo para el siguiente paso?</div>
     <a href="mailto:angel.aplnr@gmail.com" class="mail-link">angel.aplnr@gmail.com</a>
 </footer>
 
@@ -310,7 +346,7 @@
     const galleries = document.querySelectorAll('.gallery-section');
 
     tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
+        tab.addEventListener('click', (e) => {
             // Quitar clase active de todos los botones y galerías
             tabs.forEach(t => t.classList.remove('active'));
             galleries.forEach(g => g.classList.remove('active'));
@@ -320,7 +356,11 @@
 
             // Mostrar la galería correspondiente
             const targetId = tab.getAttribute('data-target');
-            document.getElementById(targetId).classList.add('active');
+            const targetGallery = document.getElementById(targetId);
+            targetGallery.classList.add('active');
+            
+            // Opcional: Pequeño scroll suave hacia la galería si la pantalla es muy pequeña
+            // targetGallery.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         });
     });
 </script>
